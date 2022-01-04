@@ -1,0 +1,54 @@
+/*
+ * NOTE: Only use this if strictly necessary--flag this in your PR and
+ * explain why it's necessary if you're going to use it!
+ *
+ * NOTE: If you update this file, you *must* change the filename to bust users'
+ * browser caches. No digest is added automatically.
+ *
+ * NOTE: When you update this file please increment the current version as indicated here,
+ * and increment the current version in the name of this file.
+ * CURRENT_VERSION: 2
+ *
+ * FAQ:
+ * Q: How does this work?
+ * A: IE allows certain unusual characters (specifically, \0 & \9) as valid for
+ * the purposes of performing media queries, while all sane browsers do not and
+ * instead ignore the besmirched media query block. See here for details:
+ * https://keithclark.co.uk/articles/moving-ie-specific-css-into-media-blocks/
+ * https://stackoverflow.com/questions/18907131/detecting-ie11-using-css-capability-feature-detection
+ *
+ * NOTE: Not all of the hacks from the StackOverflow post work, but these have
+ * all been tested.
+ *
+ * Q: Why do we need this? Why not just use <!--[if IE]><![endif]--> and its
+ * cousins?
+ * A: Conditional comments are not supported for IE10 and above. This is
+ * because IE10 thinks it doesn't suck really really badly, when it in fact
+ * does (Flexbox, anyone?). See here for details:
+ * https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/hh801214(v=vs.85)
+ *
+ * Q: Why is this in a CSS file and not a LESS file?
+ * A: LESS can't handle this ridiculous debauchery, and will simply throw an
+ * error, so we must not process this delicate creature.
+ */
+
+/* Targets IE8 */
+
+.show-ie10-down {
+  display: none;
+}
+
+@media \0screen {
+  .hidden-ie10-down { display: none; }
+  .show-ie10-down { display: block; }
+}
+
+/* Targets IE9 */
+@media screen and (min-width:0\0) and (min-resolution: .001dpcm) {
+  .hidden-ie10-down { display: none; }
+  .show-ie10-down { display: block; }
+}
+
+/* Targets IE10 */
+_:-ms-lang(x), .hidden-ie10-down { display: none\9; }
+_:-ms-lang(x), .show-ie10-down { display: block\9; }
